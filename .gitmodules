@@ -1,0 +1,15 @@
+[submodule "Test/googletest"]
+	path = Test/googletest
+	url = https://github.com/chcly/googletest.git
+[submodule "CMake/Modules"]
+	path = CMake/Modules
+	url = https://github.com/chcly/CMakeModules.git
+[submodule "Internal/Utils"]
+	path = Internal/Utils
+	url = https://github.com/chcly/Module.Utils.git
+[submodule "Internal/View"]
+	path = Internal/View
+	url = https://github.com/chcly/Module.View.git
+[submodule "Internal/Thread"]
+	path = Internal/Thread
+	url = https://github.com/chcly/Module.Thread.git

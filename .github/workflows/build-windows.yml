@@ -1,0 +1,17 @@
+name: Windows
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+     - name: Install Qt
+       uses: jurplel/install-qt-action@v3
+       with:
+         version: '6.4.1'
+         host: 'windows'
+         target: 'desktop'
+     - uses: actions/checkout@v3
+     - name: Configure
+       run: cmake -S . -B Build -DQtTemplate_BUILD_TEST=OFF -DQtTemplate_AUTO_RUN_TEST=OFF
+     - name: Build
+       run: cmake --build Build
