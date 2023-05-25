@@ -1,4 +1,4 @@
-# QtTemplate
+# DirView
 
 Defines a Qt library.
 
@@ -15,12 +15,12 @@ The testing directory is setup to work with [googletest](https://github.com/goog
 
 ## Building
 
-![A1](https://github.com/chcly/QtTemplate/actions/workflows/build-linux.yml/badge.svg)
-![A2](https://github.com/chcly/QtTemplate/actions/workflows/build-windows.yml/badge.svg)
+![A1](https://github.com/chcly/DirView/actions/workflows/build-linux.yml/badge.svg)
+![A2](https://github.com/chcly/DirView/actions/workflows/build-windows.yml/badge.svg)
 
 ```sh
 mkdir Build
-cmake -S . -B Build -DQtTemplate_BUILD_TEST=ON -DQtTemplate_AUTO_RUN_TEST=ON
+cmake -S . -B Build -DDirView_BUILD_TEST=ON -DDirView_AUTO_RUN_TEST=ON
 cmake --build Build
 ```
 
@@ -28,7 +28,7 @@ Optional defines.
 
 | Option                      | Description                                          | Default |
 |:----------------------------|:-----------------------------------------------------|:-------:|
-| QtTemplate_BUILD_TEST         | Build the unit test program.                         |   ON    |
-| QtTemplate_AUTO_RUN_TEST      | Automatically run the test program.                  |   OFF   |
+| DirView_BUILD_TEST         | Build the unit test program.                         |   ON    |
+| DirView_AUTO_RUN_TEST      | Automatically run the test program.                  |   OFF   |
 
 

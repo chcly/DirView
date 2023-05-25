@@ -9,7 +9,7 @@ set_group(
 )
 
 include_directories(
-    ${QtTemplate_INCLUDE}
+    ${DirView_INCLUDE}
     ${GTEST_INCLUDE}
 )
 
@@ -29,6 +29,6 @@ set_target_properties(
 )
 
 
-if (QtTemplate_AUTO_RUN_TEST)
+if (DirView_AUTO_RUN_TEST)
     run_test(${TestTargetName})
 endif()

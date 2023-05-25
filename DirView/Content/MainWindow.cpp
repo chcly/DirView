@@ -6,7 +6,7 @@
 #include "View/Metrics.h"
 #include "View/Qu.h"
 
-namespace Rt2::QtTemplate
+namespace Rt2::DirView
 {
 
     MainWindow::MainWindow(QWidget* parent) :
@@ -36,4 +36,4 @@ namespace Rt2::QtTemplate
         show();
     }
 
-}  // namespace Rt2::QtTemplate
+}  // namespace Rt2::DirView

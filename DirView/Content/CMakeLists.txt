@@ -1,5 +1,5 @@
 include(GroupSet)
-set(TargetName QtTemplateContent)
+set(TargetName DirViewContent)
 
 set_group(
     TargetName_SRC 
@@ -8,7 +8,7 @@ set_group(
 )
 
 include_directories(
-    ${QtTemplate_INCLUDE} 
+    ${DirView_INCLUDE} 
 )
 
 
@@ -19,7 +19,7 @@ add_library(
 
 target_link_libraries(
     ${TargetName} 
-    ${QtTemplate_DEP_LIBRARY}
+    ${DirView_DEP_LIBRARY}
 )
 
 set_target_properties(

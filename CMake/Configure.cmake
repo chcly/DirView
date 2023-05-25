@@ -12,9 +12,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets/Qt")
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP   "Generated/Qt")
 
-option(QtTemplate_BUILD_TEST    "Build the unit test program." OFF)
-option(QtTemplate_AUTO_RUN_TEST "Automatically run the test program." OFF)
-option(QtTemplate_BUILD_SAMPLE  "Build the sample program" ON)
+option(DirView_BUILD_TEST    "Build the unit test program." OFF)
+option(DirView_AUTO_RUN_TEST "Automatically run the test program." OFF)
+option(DirView_BUILD_SAMPLE  "Build the sample program" ON)
 
 # can cause isuses with std::string, so you 
 # have to force the dll dependency
@@ -23,30 +23,30 @@ set_dynamic_runtime()
 
 DefineExternalTargetEx(
     Utils Extern
-    ${QtTemplate_SOURCE_DIR}/Internal/Utils 
-    ${QtTemplate_SOURCE_DIR}/Internal/Utils
-    ${QtTemplate_BUILD_TEST}
-    ${QtTemplate_AUTO_RUN_TEST}
+    ${DirView_SOURCE_DIR}/Internal/Utils 
+    ${DirView_SOURCE_DIR}/Internal/Utils
+    ${DirView_BUILD_TEST}
+    ${DirView_AUTO_RUN_TEST}
 )
 
 DefineExternalTargetEx(
     View Extern
-    ${QtTemplate_SOURCE_DIR}/Internal/View 
-    ${QtTemplate_SOURCE_DIR}/Internal/View
-    ${QtTemplate_BUILD_TEST}
-    ${QtTemplate_AUTO_RUN_TEST}
+    ${DirView_SOURCE_DIR}/Internal/View 
+    ${DirView_SOURCE_DIR}/Internal/View
+    ${DirView_BUILD_TEST}
+    ${DirView_AUTO_RUN_TEST}
 )
 
 DefineExternalTargetEx(
     Thread Extern
-    ${QtTemplate_SOURCE_DIR}/Internal/Thread 
-    ${QtTemplate_SOURCE_DIR}/Internal/Thread
-    ${QtTemplate_BUILD_TEST}
-    ${QtTemplate_AUTO_RUN_TEST}
+    ${DirView_SOURCE_DIR}/Internal/Thread 
+    ${DirView_SOURCE_DIR}/Internal/Thread
+    ${DirView_BUILD_TEST}
+    ${DirView_AUTO_RUN_TEST}
 )
 
-configure_gtest(${QtTemplate_SOURCE_DIR}/Test/googletest 
-                ${QtTemplate_SOURCE_DIR}/Test/googletest/googletest/include)
+configure_gtest(${DirView_SOURCE_DIR}/Test/googletest 
+                ${DirView_SOURCE_DIR}/Test/googletest/googletest/include)
 
 
 if (WIN32)

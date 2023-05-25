@@ -12,6 +12,6 @@ jobs:
          target: 'desktop'
      - uses: actions/checkout@v3
      - name: Configure
-       run: cmake -S . -B Build -DQtTemplate_BUILD_TEST=OFF -DQtTemplate_AUTO_RUN_TEST=OFF
+       run: cmake -S . -B Build -DDirView_BUILD_TEST=OFF -DDirView_AUTO_RUN_TEST=OFF
      - name: Build
        run: cmake --build Build

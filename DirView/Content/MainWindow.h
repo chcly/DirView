@@ -4,7 +4,7 @@
 #include  "View/LayoutView.h"
 
 
-namespace Rt2::QtTemplate
+namespace Rt2::DirView
 {
     class MainWindow final : public View::LayoutView
     {

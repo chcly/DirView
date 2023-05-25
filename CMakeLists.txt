@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(QtTemplate)
+project(DirView)
 
 # Use C++-17 by default.
 enable_language(CXX)
@@ -11,13 +11,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # CMake - Contains project local modules.
 #
 # CMake/Modules - Contains project independent modules.
-#   GitUpdate.cmake invokes python ${QtTemplate_SOURCE_DIR}/gitupdate.py
+#   GitUpdate.cmake invokes python ${DirView_SOURCE_DIR}/gitupdate.py
 #   to pull all submodules and update to head.
 #   If this fails, it will attempt to invoke git directly to pull 
 #   submodules. 
 list(APPEND CMAKE_MODULE_PATH 
-  ${QtTemplate_SOURCE_DIR}/CMake 
-  ${QtTemplate_SOURCE_DIR}/CMake/Modules
+  ${DirView_SOURCE_DIR}/CMake 
+  ${DirView_SOURCE_DIR}/CMake/Modules
 )
 include(Configure)
 if (NOT Configure_SUCCEEDED)
@@ -26,10 +26,10 @@ endif()
 
 
 
-if (QtTemplate_ExternalTarget)
-    set(TargetFolders ${QtTemplate_TargetFolders})
-    set(TargetName    ${QtTemplate_TargetName})
-    set(TargetGroup   ${QtTemplate_TargetGroup})
+if (DirView_ExternalTarget)
+    set(TargetFolders ${DirView_TargetFolders})
+    set(TargetName    ${DirView_TargetName})
+    set(TargetGroup   ${DirView_TargetGroup})
 else()
     add_subdirectory(CMake)
     add_subdirectory(Internal/Utils)
@@ -38,16 +38,16 @@ else()
     add_subdirectory(Internal/View)
 
     set(TargetFolders TRUE)
-    set(TargetName QtTemplate)
+    set(TargetName DirView)
     set(TargetGroup )
     
-   set(QtTemplate_DEP_INCLUDE  
+   set(DirView_DEP_INCLUDE  
         ${Utils_INCLUDE} 
         ${View_INCLUDE} 
         ${Thread_INCLUDE}
     )
     
-   set(QtTemplate_DEP_LIBRARY  
+   set(DirView_DEP_LIBRARY  
         ${Utils_LIBRARY} 
         ${View_LIBRARY} 
         ${Thread_LIBRARY}
@@ -56,21 +56,21 @@ else()
         Qt6::Gui 
     )
 
-    set(QtTemplate_INCLUDE  
-        ${QtTemplate_SOURCE_DIR}
-        ${QtTemplate_DEP_INCLUDE}
+    set(DirView_INCLUDE  
+        ${DirView_SOURCE_DIR}
+        ${DirView_DEP_INCLUDE}
     )
 
-    set(QtTemplate_LIBRARY  
+    set(DirView_LIBRARY  
         ${TargetName}
-        ${QtTemplate_DEP_LIBRARY}
+        ${DirView_DEP_LIBRARY}
     )
 endif()
 
-add_subdirectory(Source)
+add_subdirectory(DirView)
 
-if (QtTemplate_BUILD_TEST)
-    if (NOT QtTemplate_ExternalTarget)
+if (DirView_BUILD_TEST)
+    if (NOT DirView_ExternalTarget)
         add_gtest_source(Extern/ThirdParty)
     endif()
 
