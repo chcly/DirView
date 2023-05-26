@@ -22,33 +22,37 @@
 #pragma once
 #include <QLineEdit>
 #include <QWidget>
-#include "DirViewEditPath.h"
 #include "Utils/String.h"
 #include "View/Definitions.h"
 #include "View/LayoutView.h"
+#include "View/StringListView.h"
 
 namespace Rt2::View
 {
-    class DirViewInfo;
-    class DirListView;
+    class ListRunner;
 
-    class DirView final : public LayoutView
+    class DirListView final : public LayoutView
     {
         Q_OBJECT
     private:
-        EditPath*    _path{nullptr};
-        DirListView* _listView{nullptr};
-        DirViewInfo* _info{nullptr};
-        StringModel  _model;
+        StringListView* _view{nullptr};
+        ListRunner*     _runner{nullptr};
+        StringModel     _model;
 
     public:
-        explicit DirView(QWidget* parent = nullptr);
-        ~DirView() override;
+        explicit DirListView(QWidget* parent = nullptr);
+        ~DirListView() override;
 
         void setPath(const String& path);
 
+        void addOutput(const StringModel::Observer& ot) const;
+
     private:
         void construct();
+
+        void push(const String& str);
+
+        bool event(QEvent* event) override;
     };
 
 }  // namespace Rt2::View
