@@ -1,10 +1,12 @@
 include(GroupSet)
-set(TargetName DirViewContent)
+set(TargetName DirView)
 
 set_group(
     TargetName_SRC 
     Source:*.cpp
+    #Source/Builder:Builder/*.cpp
     Header:*.h
+    #Header/Builder:Builder/*.h
 )
 
 include_directories(

@@ -1,6 +1,6 @@
 include(GroupSet)
 set(TargetGroup Sample)
-set(TargetName QtTemplate)
+set(TargetName DirViewer)
 
 set_group(
     TargetName_SRC 
@@ -9,7 +9,7 @@ set_group(
 )
 
 include_directories(
-    ${QtTemplate_INCLUDE} 
+    ${DirView_INCLUDE} 
 )
 
 
@@ -20,8 +20,8 @@ add_executable(
 
 target_link_libraries(
     ${TargetName} 
-    ${QtTemplate_DEP_LIBRARY} 
-    QtTemplateContent 
+    ${DirView_DEP_LIBRARY} 
+    DirView 
 )
 
 set_target_properties(

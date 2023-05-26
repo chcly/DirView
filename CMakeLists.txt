@@ -35,6 +35,7 @@ else()
     add_subdirectory(Internal/Utils)
     include(${Utils_SOURCE_DIR}/CMake/Locals.cmake)
     add_subdirectory(Internal/Thread)
+    set(View_BUILD_SAMPLES ON)
     add_subdirectory(Internal/View)
 
     set(TargetFolders TRUE)
