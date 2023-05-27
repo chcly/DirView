@@ -45,7 +45,8 @@ namespace Rt2::View
     {
         const auto lo = Qu::horizontal();
         constructView(lo);
-        setPadding(0);
+        setPadding(Metrics::borderSizeThin);
+        lo->setSpacing(Metrics::borderSizeThin);
 
         const auto up = Qu::icon(IconBack);
         lo->addWidget(up);
