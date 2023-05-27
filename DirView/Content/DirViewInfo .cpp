@@ -20,15 +20,12 @@
 -------------------------------------------------------------------------------
 */
 #include <QLabel>
-#include <QPainter>
 #include <QVBoxLayout>
-#include "DirViewInfo.h"
+#include "DirView/Content/DirViewInfo.h"
 #include "Utils/Char.h"
 #include "Utils/FileSystem.h"
 #include "Utils/String.h"
 #include "View/Colors.h"
-#include "View/CustomView.h"
-#include "View/Definitions.h"
 #include "View/Metrics.h"
 #include "View/Qu.h"
 
@@ -50,8 +47,8 @@ namespace Rt2::View
         setPadding(0);
         setMinimumSize(Metrics::minPanel);
 
-        _dirs = Qu::text("", Colors::Foreground);
-        _files = Qu::text("", Colors::Foreground);
+        _dirs        = Qu::text("", Colors::Foreground);
+        _files       = Qu::text("", Colors::Foreground);
         _sizeInBytes = Qu::text("", Colors::Foreground);
 
         lo->addLayout(Qu::titleList("Info", {}));
@@ -63,18 +60,23 @@ namespace Rt2::View
 
         lo->setSizeConstraint(QLayout::SetMinimumSize);
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-
     }
 
     void DirViewInfo::setPath(const String& path)
     {
-        if(!FileSystem::isDirectory(DirectoryEntry(path)))
+        if (!FileSystem::isDirectory(DirectoryEntry(path)))
             return;
 
+        _counts[0] = _counts[1] = _counts[2] = 0;
         FileSystem::count(path, _counts[0], _counts[1], _counts[2]);
 
+        _dirs->clear();
         _dirs->setText(Qsu::to(Su::join(" Directories, ", _counts[0])));
+
+        _files->clear();
         _files->setText(Qsu::to(Su::join(" Files, ", _counts[1])));
+
+        _sizeInBytes->clear();
         _sizeInBytes->setText(Qsu::to(Su::join(" Size in bytes, ",
                                                Char::commaInt(_counts[2]))));
         update();

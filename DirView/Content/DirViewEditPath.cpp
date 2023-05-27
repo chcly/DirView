@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
-#include "DirViewEditPath.h"
+#include "DirView/Content/DirViewEditPath.h"
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QWidget>
@@ -28,7 +28,6 @@
 #include "Utils/String.h"
 #include "View/Definitions.h"
 #include "View/LayoutView.h"
-#include "View/Metrics.h"
 #include "View/Qu.h"
 #include "View/TextEditView.h"
 
@@ -70,7 +69,7 @@ namespace Rt2::View
                     _model.setValue(str, ViewModel::OUTPUT);
             });
 
-        // click -> back 
+        // click -> back
         connect(up,
                 &IconButtonView::clicked,
                 this,
@@ -79,7 +78,6 @@ namespace Rt2::View
                     const Directory::Path val = Directory::Path(_model.value()).parentDir();
                     _model.setValue(val.full(), ViewModel::BOTH);
                 });
-
     }
 
     void EditPath::setPath(const String& path)

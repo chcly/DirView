@@ -20,12 +20,10 @@
 -------------------------------------------------------------------------------
 */
 #pragma once
-#include <QLineEdit>
-#include <QWidget>
 #include "Utils/String.h"
-#include "View/CustomView.h"
 #include "View/Definitions.h"
 #include "View/LayoutView.h"
+
 class QLabel;
 
 namespace Rt2::View
@@ -34,10 +32,11 @@ namespace Rt2::View
     {
         Q_OBJECT
     private:
-        QLabel*     _dirs{nullptr};
-        QLabel*     _files{nullptr};
-        QLabel*     _sizeInBytes{nullptr};
-        size_t _counts[3]{0, 0, 0};
+        QLabel* _dirs{nullptr};
+        QLabel* _files{nullptr};
+        QLabel* _sizeInBytes{nullptr};
+        size_t  _counts[3]{0, 0, 0};
+
     public:
         explicit DirViewInfo(QWidget* parent = nullptr);
 

@@ -24,8 +24,14 @@
 
 namespace Rt2::View
 {
-    EntryEvent::EntryEvent(String dir):
-        QEvent((Type)DirListEvent),
+    DirListEvent::DirListEvent(String dir) :
+        QEvent((Type)DirListEventCode),
+        _directory{std::move(dir)}
+    {
+    }
+
+    DirClickEvent::DirClickEvent(String dir) :
+        QEvent((Type)DirClickEventCode),
         _directory{std::move(dir)}
     {
     }

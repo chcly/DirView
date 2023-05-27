@@ -19,13 +19,13 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
-#include "DirViewCanvas.h"
+#include "DirView/Content/DirViewCanvas.h"
 #include <QGraphicsView>
 #include <QMouseEvent>
 #include <QWidget>
-#include "Builder/Events.h"
-#include "Cache/MathConstructors.h"
+#include "DirView/Content/Builder/Events.h"
 #include "DirView/Content/Builder/Manager.h"
+#include "DirView/Content/DirViewEvent.h"
 #include "View/Colors.h"
 #include "View/Metrics.h"
 #include "View/Qu.h"
@@ -86,13 +86,11 @@ namespace Rt2::View
 
     void DirViewCanvas::push(const Directory& directory)
     {
-        DirViewItem* item = new DirViewItem(directory);
+        DirViewItem* item = new DirViewItem(directory, this);
         item->setFlags(QGraphicsItem::ItemIsSelectable);
-
-        _scene->addItem(item);
-        
         item->setPosition(_shelf);
 
+        _scene->addItem(item);
         if (_cur + 1 < _nrPerW)
         {
             ++_cur;
@@ -116,6 +114,11 @@ namespace Rt2::View
         updateBounds();
         _scene->clear();
         _manager->build({path, 0, 0});
+    }
+
+    void DirViewCanvas::addOutput(const StringModel::Observer& ot)
+    {
+        _model.addOutput(ot);
     }
 
     void DirViewCanvas::updateMouse(const QPointF& co)
@@ -164,13 +167,22 @@ namespace Rt2::View
 
     bool DirViewCanvas::event(QEvent* event)
     {
-        if ((int)event->type() == Builder::DirPushEvent)
+        if ((int)event->type() == Builder::DirPushEventCode)
         {
-            if (const Builder::DirectoryEvent* de =
-                    (Builder::DirectoryEvent*)event)
+            if (const Builder::DirPushEvent* de =
+                    (Builder::DirPushEvent*)event)
             {
                 push(de->directory());
             }
+            event->accept();
+            return true;
+        }
+
+        if ((int)event->type() == DirClickEventCode)
+        {
+            if (const DirClickEvent* de =
+                    (DirClickEvent*)event)
+                _model.setValue(de->directory(), ViewModel::OUTPUT);
             event->accept();
             return true;
         }

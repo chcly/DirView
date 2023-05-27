@@ -41,6 +41,7 @@ namespace Rt2::View
     {
         Q_OBJECT
     private:
+        StringModel       _model;
         QGraphicsScene*   _scene{nullptr};
         QPointF           _co{0, 0}, _last{0, 0}, _offs{0, 0}, _shelf{0, 0};
         QRectF            _bounds{0, 0, 1, 1};
@@ -54,6 +55,9 @@ namespace Rt2::View
         ~DirViewCanvas() override;
 
         void setPath(const String& path);
+
+
+        void addOutput(const StringModel::Observer& ot);
 
     private:
         void construct();

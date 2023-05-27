@@ -23,13 +23,12 @@
 #include <QBoxLayout>
 #include <QSplitter>
 #include <QWidget>
+#include "Cache/ColorCache.h"
+#include "Cache/PathCache.h"
 #include "DirListView.h"
 #include "DirViewCanvas.h"
 #include "DirViewEditPath.h"
 #include "DirViewInfo.h"
-#include "Cache/ColorCache.h"
-#include "Cache/PathCache.h"
-#include "View/Colors.h"
 #include "View/Metrics.h"
 #include "View/Qu.h"
 
@@ -39,8 +38,7 @@ namespace Rt2::View
     DirView::DirView(QWidget* parent) :
         LayoutView(parent)
     {
-        // these should be removed
-
+        // these should made local
         new ColorCache();
         new PathCache();
         construct();
@@ -68,9 +66,9 @@ namespace Rt2::View
         _path = new EditPath();
         _path->setFixedHeight(Metrics::iconPadding.height() * 2);
 
-        _info = new DirViewInfo();
+        _info     = new DirViewInfo();
         _listView = new DirListView();
-        _canvas = new DirViewCanvas();
+        _canvas   = new DirViewCanvas();
 
         const auto ml = Qu::horizontal();
         const auto sb =
@@ -118,5 +116,12 @@ namespace Rt2::View
                     _canvas->setPath(str);
             });
 
+        // canvas -> path
+        _canvas->addOutput(
+            [this](const String& str)
+            {
+                if (_path)
+                    _path->setPath(str);
+            });
     }
 }  // namespace Rt2::View

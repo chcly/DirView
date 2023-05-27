@@ -23,25 +23,27 @@
 #include <QGraphicsItem>
 #include "DirViewCanvas.h"
 #include "Utils/String.h"
-#include "View/LayoutView.h"
 
 namespace Rt2::View
 {
+    using PathChange = std::function<void(const String& path)>;
+
     class DirViewItem final : public QGraphicsItem
     {
     public:
         static constexpr qreal size = 200;
 
     private:
-        Directory _item{};
-        QRectF    _bounds{0, 0, 1, 1};
-        int       _state{0};
-        QPointF   _pos{0.0, 0.0};
-        QRectF    _text{0.0, 0.0, 1.0, 1.0};
-        String    _name;
+        Directory      _item{};
+        QRectF         _bounds{0, 0, 1, 1};
+        QPointF        _pos{0.0, 0.0};
+        QRectF         _text{0.0, 0.0, 1.0, 1.0};
+        String         _name;
+        String         _path;
+        QGraphicsView* _view{nullptr};
 
     public:
-        explicit DirViewItem(const Directory& dir, QGraphicsItem* parent = nullptr);
+        explicit DirViewItem(const Directory& dir, QGraphicsView* view, QGraphicsItem* parent = nullptr);
         ~DirViewItem() override;
 
         void setPosition(const QPointF& pos);
@@ -57,9 +59,7 @@ namespace Rt2::View
 
         void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-        void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-
-        void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+        void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) override;
     };
 
 }  // namespace Rt2::View

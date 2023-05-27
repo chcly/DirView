@@ -19,25 +19,25 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
-#include "DirViewItem.h"
+#include "DirView/Content/DirViewItem.h"
 #include <qstyleoption.h>
 #include <QApplication>
-#include <QGraphicsScene>
 #include <QPainter>
-#include "Cache/ColorCache.h"
-#include "Cache/MathConstructors.h"
-#include "Cache/PathCache.h"
+#include "DirView/Content/Cache/ColorCache.h"
+#include "DirView/Content/Cache/MathConstructors.h"
+#include "DirView/Content/Cache/PathCache.h"
+#include "DirView/Content/DirViewEvent.h"
 #include "Utils/Directory/Path.h"
 #include "View/Colors.h"
 #include "View/Metrics.h"
 #include "View/Qu.h"
-#include "View/View.h"
 
 namespace Rt2::View
 {
-    DirViewItem::DirViewItem(const Directory& dir, QGraphicsItem* parent) :
+    DirViewItem::DirViewItem(const Directory& dir, QGraphicsView* view, QGraphicsItem* parent) :
         QGraphicsItem(parent),
-        _item(dir)
+        _item(dir),
+        _view(view)
     {
         construct();
     }
@@ -60,10 +60,8 @@ namespace Rt2::View
 
         resetTransform();
 
-        const String item = PathCache::reference().find(_item.index());
-
-        _name = Rt2::Directory::Path(item).base();
-
+        _path = Su::trimR(PathCache::reference().find(_item.index()), '/');
+        _name = Rt2::Directory::Path(_path).base();
         _text = Qu::measure(_name, Metrics::defaultTextSize);
     }
 
@@ -82,17 +80,11 @@ namespace Rt2::View
         return _bounds.height();
     }
 
-    void DirViewItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+    void DirViewItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
     {
-        _state |= ENTER;
-        update();
+        QApplication::postEvent(_view, new DirClickEvent(_path));
     }
 
-    void DirViewItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
-    {
-        _state &= ~ENTER;
-        update();
-    }
     constexpr QRectF Qrs = {.05, -0.05, 1, 1};
     constexpr QRectF Qr0 = {0, 0, 1, 1};
     constexpr QRectF Qr1 = {0.0125, 0.0125, 1 - 0.025, 1 - 0.025};

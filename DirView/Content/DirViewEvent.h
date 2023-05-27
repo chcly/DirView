@@ -20,26 +20,42 @@
 -------------------------------------------------------------------------------
 */
 #pragma once
-#include <QEvent>
 #include "Utils/FileSystem.h"
 #include "View/Definitions.h"
 
 namespace Rt2::View
 {
-    constexpr int DirListEvent = EC_001;
+    constexpr int DirListEventCode  = EC_001;
+    constexpr int DirClickEventCode = EC_003;
 
-    class EntryEvent final : public QEvent
+    class DirListEvent final : public QEvent
     {
     private:
         const String _directory;
 
     public:
-        explicit EntryEvent(String dir);
+        explicit DirListEvent(String dir);
 
         const String& directory() const;
     };
 
-    inline const String& EntryEvent::directory() const
+    inline const String& DirListEvent::directory() const
+    {
+        return _directory;
+    }
+
+    class DirClickEvent final : public QEvent
+    {
+    private:
+        const String _directory;
+
+    public:
+        explicit DirClickEvent(String dir);
+
+        const String& directory() const;
+    };
+
+    inline const String& DirClickEvent::directory() const
     {
         return _directory;
     }

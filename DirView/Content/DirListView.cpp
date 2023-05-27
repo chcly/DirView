@@ -115,9 +115,9 @@ namespace Rt2::View
 
     bool DirListView::event(QEvent* event)
     {
-        if ((int)event->type() == DirListEvent)
+        if ((int)event->type() == DirListEventCode)
         {
-            if (const auto path = Directory::Path(((EntryEvent*)event)->directory());
+            if (const auto path = Directory::Path(((DirListEvent*)event)->directory());
                 path.exists())
             {
                 _view->addEntry(path.base(), path.full());
@@ -129,7 +129,7 @@ namespace Rt2::View
 
     void DirListView::push(const String& str)
     {
-        QApplication::postEvent(this, new EntryEvent(str));
+        QApplication::postEvent(this, new DirListEvent(str));
     }
 
     void DirListView::setPath(const String& path)
