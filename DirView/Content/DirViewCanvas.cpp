@@ -35,6 +35,10 @@ class QGraphicsScene;
 
 namespace Rt2::View
 {
+    constexpr qreal Spacing  = Metrics::defaultTextSize + 6;
+    constexpr qreal Sx       = Spacing / 2;
+    constexpr qreal ItemSize = DirViewItem::size;
+
     DirViewCanvas::DirViewCanvas(QWidget* parent) :
         QGraphicsView(parent)
     {
@@ -54,45 +58,59 @@ namespace Rt2::View
         setRenderHint(QPainter::Antialiasing);
         setMinimumWidth(Metrics::minWindow.width());
         setBackgroundBrush(Colors::Border);
-        setTransformationAnchor(NoAnchor);
+        setTransformationAnchor(AnchorViewCenter);
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        setInteractive(true);
+        resetTransform();
 
         delete _scene;
-        _scene = new QGraphicsScene(0, 0, width(), height());
+        _scene = new QGraphicsScene(this);
         setScene(_scene);
+        updateBounds();
+
         _manager = new Builder::Manager(this);
+    }
+
+    void DirViewCanvas::updateBounds()
+    {
+        const QRectF r = _scene->itemsBoundingRect();
+        setSceneRect(
+            {
+                0,
+                0,
+                Max((qreal)width() - Spacing, r.width() - Spacing),
+                Max((qreal)height(), r.height() + 2 * Spacing),
+            });
     }
 
     void DirViewCanvas::push(const Directory& directory)
     {
         DirViewItem* item = new DirViewItem(directory);
         _scene->addItem(item);
-
         item->setPosition(_shelf);
 
         if (_cur + 1 < _nrPerW)
         {
             ++_cur;
-            _shelf += QPointF(item->right() + 10, 0);
+            _shelf.setX(_shelf.x() + item->width() + Spacing);
         }
         else
         {
             _cur = 0;
-            _shelf.setX(0);
-            _shelf.setY(_shelf.y() + (item->bottom() + 10));
+            _shelf.setX(Sx);
+            _shelf.setY(_shelf.y() + item->height() + Spacing);
         }
-        setSceneRect(
-            QRectF{
-                0,
-                0,
-                Max(item->right(), _shelf.x()),
-                Max(item->bottom(), _shelf.y())});
+
+        updateBounds();
         update();
     }
 
     void DirViewCanvas::setPath(const String& path)
     {
-        _cur = 0;
-        _shelf = {0, 0};
+        _cur   = 0;
+        _shelf = {Sx, Sx};
+        updateBounds();
         _scene->clear();
         _manager->build({path, 0, 0});
     }
@@ -110,7 +128,9 @@ namespace Rt2::View
             _state |= ENTER;
             updateMouse(mapToScene(Qmc::point(event->globalPosition())));
             update();
+            event->accept();
         }
+        QGraphicsView::mousePressEvent(event);
     }
 
     void DirViewCanvas::mouseReleaseEvent(QMouseEvent* event)
@@ -120,7 +140,9 @@ namespace Rt2::View
             _state &= ~ENTER;
             _offs = _co = _last = {0, 0};
             update();
+            event->accept();
         }
+        QGraphicsView::mouseReleaseEvent(event);
     }
 
     void DirViewCanvas::mouseMoveEvent(QMouseEvent* event)
@@ -131,9 +153,10 @@ namespace Rt2::View
 
             _offs += _co;
             translate(_offs.x(), _offs.y());
-
             update();
+            event->accept();
         }
+        QGraphicsView::mouseMoveEvent(event);
     }
 
     bool DirViewCanvas::event(QEvent* event)
@@ -145,6 +168,8 @@ namespace Rt2::View
             {
                 push(de->directory());
             }
+            event->accept();
+            return true;
         }
 
         return QGraphicsView::event(event);
@@ -152,7 +177,9 @@ namespace Rt2::View
 
     void DirViewCanvas::resizeEvent(QResizeEvent* event)
     {
-        _nrPerW = event->size().width() / DirViewItem::size;
+        _nrPerW = int((qreal)event->size().width() / (ItemSize + Spacing));
+        updateBounds();
+        QGraphicsView::resizeEvent(event);
     }
 
 }  // namespace Rt2::View

@@ -20,6 +20,7 @@
 -------------------------------------------------------------------------------
 */
 #include "DirViewItem.h"
+#include <qstyleoption.h>
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QPainter>
@@ -47,22 +48,30 @@ namespace Rt2::View
 
     void DirViewItem::setPosition(const QPointF& pos)
     {
-        _textOffs = pos;
+        _pos = pos;
+        _bounds.setX(_pos.x());
+        _bounds.setY(_pos.y());
+        _bounds.setWidth(size);
+        _bounds.setHeight(size);
     }
 
     void DirViewItem::construct()
     {
-        _bounds   = {0, 0, size, size};
-        _textOffs = {0, 0};
+        _bounds = {0, 0, size, size};
+        _pos    = {0, 0};
 
-        String item = PathCache::reference().find(_item.index());
+        resetTransform();
 
-        _name = Rt2::Directory::Path(item).stem();
+        const String item = PathCache::reference().find(_item.index());
+
+        _name = Rt2::Directory::Path(item).base();
+
+        _text = Qu::measure(_name, Metrics::defaultTextSize);
     }
 
     QRectF DirViewItem::boundingRect() const
     {
-        return transform().mapRect(_bounds);
+        return _bounds;
     }
 
     qreal DirViewItem::width() const
@@ -73,36 +82,6 @@ namespace Rt2::View
     qreal DirViewItem::height() const
     {
         return _bounds.height();
-    }
-
-    qreal DirViewItem::right() const
-    {
-        return transform().mapRect(_bounds).right();
-    }
-
-    qreal DirViewItem::bottom() const
-    {
-        return transform().mapRect(_bounds).bottom();
-    }
-
-    qreal DirViewItem::left() const
-    {
-        return transform().mapRect(_bounds).left();
-    }
-
-    qreal DirViewItem::top() const
-    {
-        return transform().mapRect(_bounds).top();
-    }
-
-    QRectF DirViewItem::input() const
-    {
-        return {left() - Socket, top() + height() / 2, Socket, Socket};
-    }
-
-    QRectF DirViewItem::output() const
-    {
-        return {right(), top() + height() / 2, Socket, Socket};
     }
 
     void DirViewItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
@@ -126,13 +105,23 @@ namespace Rt2::View
                             const QStyleOptionGraphicsItem* option,
                             QWidget*                        widget)
     {
+        // paint->setPen(QPen(Colors::Foreground));
+        // paint->drawRect(option->rect);
+
+        const QRectF rect = boundingRect();
+
         paint->save();
-        paint->resetTransform();
-        paint->translate(_textOffs.x(), _textOffs.y());
-        paint->scale(size, size);
+        paint->translate(rect.x(), rect.y());
+        paint->scale(rect.width(), rect.height());
+
         paint->fillRect(Qr0, Colors::Background);
         paint->fillRect(Qr1, Colors::Background);
         paint->fillRect(Qr2, Colors::Border.lighter(Colors::Lgt030));
+
+        QTransform t;
+        t.translate(0, 1);
+        t.scale(1, -1);
+        paint->setTransform(t, true);
 
         for (const auto& r : _item.files())
         {
@@ -153,10 +142,14 @@ namespace Rt2::View
             paint->fillRect(Qm::adjust(r2, 0.125), col);
         }
 
-        paint->resetTransform();
-        paint->setPen(QPen(Colors::Foreground));
-        paint->drawText(_textOffs, Qsu::to(_name));
         paint->restore();
+
+        paint->setPen(QPen(Colors::Foreground.darker(Colors::Drk030)));
+        paint->drawText(QPointF{
+                            rect.left(),
+                            rect.bottom() + _text.height(),
+                        },
+                        Qsu::to(_name));
     }
 
 }  // namespace Rt2::View

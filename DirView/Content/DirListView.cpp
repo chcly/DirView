@@ -61,23 +61,27 @@ namespace Rt2::View
             return !isRunning();
         }
 
+        bool pushList(DirectoryEntryArray& de)
+        {
+            while (!de.empty())
+            {
+                if (sync())
+                    return false;
+
+                const auto& dir = de.back();
+                _push(dir.path().generic_string());
+                de.pop_back();
+            }
+            return true;
+        }
+
         void update() override
         {
             DirectoryEntryArray de, fl;
             FileSystem::list(DirectoryEntry(_path), &de, &fl, nullptr);
 
-            for (const auto& dir : de)
-            {
-                if (sync())
-                    return;
-                _push(dir.path().generic_string());
-            }
-            for (const auto& file : fl)
-            {
-                if (sync())
-                    return;
-                _push(file.path().generic_string());
-            }
+            if (pushList(de))
+                pushList(fl);
         }
     };
 

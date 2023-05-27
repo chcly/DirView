@@ -36,7 +36,8 @@ namespace Rt2::View
         Directory _item{};
         QRectF    _bounds{0, 0, 1, 1};
         int       _state{0};
-        QPointF   _textOffs{0.0, 0.0};
+        QPointF   _pos{0.0, 0.0};
+        QRectF    _text{0.0, 0.0, 1.0, 1.0};
         String    _name;
 
     public:
@@ -50,17 +51,6 @@ namespace Rt2::View
         qreal width() const;
 
         qreal height() const;
-
-        qreal right() const;
-
-        qreal bottom() const;
-
-        qreal left() const;
-
-        qreal top() const;
-
-        QRectF input() const;
-        QRectF output() const;
 
     private:
         void construct();
