@@ -1,6 +1,8 @@
 # DirView
 
-Defines a Qt library.
+Sample directory viewer.
+
+![I0](Extras/SS01.png)
 
 ## Layout structure
 
