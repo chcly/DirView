@@ -47,9 +47,9 @@ namespace Rt2::View
         setPadding(0);
         setMinimumSize(Metrics::minPanel);
 
-        _dirs        = Qu::text("", Colors::Foreground);
-        _files       = Qu::text("", Colors::Foreground);
-        _sizeInBytes = Qu::text("", Colors::Foreground);
+        _dirs        = Qu::text("", Colors::Emphasis[3]);
+        _files       = Qu::text("", Colors::Emphasis[3]);
+        _sizeInBytes = Qu::text("", Colors::Emphasis[3]);
 
         lo->addLayout(Qu::titleList("Info", {}));
         lo->addWidget(_dirs);

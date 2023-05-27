@@ -101,7 +101,7 @@ namespace Rt2::View
         paint->translate(rect.x(), rect.y());
         paint->scale(rect.width(), rect.height());
 
-        paint->fillRect(Qr0, Colors::Background);
+        paint->fillRect(Qr0, Colors::Border);
         paint->fillRect(Qr1, Colors::Background);
         paint->fillRect(Qr2, Colors::Border.lighter(Colors::Lgt030));
 
@@ -131,10 +131,10 @@ namespace Rt2::View
 
         paint->restore();
 
-        paint->setPen(QPen(Colors::Foreground.darker(Colors::Drk030)));
+        paint->setPen(QPen(Colors::Emphasis[2]));
         paint->drawText(QPointF{
                             rect.left(),
-                            rect.bottom() + _text.height(),
+                            4 + rect.bottom() + _text.height() / 2,
                         },
                         Qsu::to(_name));
     }

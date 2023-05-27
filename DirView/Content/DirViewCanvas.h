@@ -43,11 +43,9 @@ namespace Rt2::View
     private:
         StringModel       _model;
         QGraphicsScene*   _scene{nullptr};
-        QPointF           _co{0, 0}, _last{0, 0}, _offs{0, 0}, _shelf{0, 0};
+        QPointF           _shelf{0, 0};
         QRectF            _bounds{0, 0, 1, 1};
-        int               _state{0};
         Builder::Manager* _manager{nullptr};
-        Math::Vec2        _addPos{0, 0};
         int               _nrPerW{0}, _cur{0};
 
     public:
@@ -55,7 +53,6 @@ namespace Rt2::View
         ~DirViewCanvas() override;
 
         void setPath(const String& path);
-
 
         void addOutput(const StringModel::Observer& ot);
 
@@ -65,14 +62,6 @@ namespace Rt2::View
         void updateBounds();
 
         void push(const Directory& directory);
-
-        void updateMouse(const QPointF& co);
-
-        void mousePressEvent(QMouseEvent* event) override;
-
-        void mouseReleaseEvent(QMouseEvent* event) override;
-
-        void mouseMoveEvent(QMouseEvent* event) override;
 
         bool event(QEvent* event) override;
 

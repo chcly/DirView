@@ -38,7 +38,7 @@ namespace Rt2::View
     DirView::DirView(QWidget* parent) :
         LayoutView(parent)
     {
-        // these should made local
+        // these should be made local
         new ColorCache();
         new PathCache();
         construct();

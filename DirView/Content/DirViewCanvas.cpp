@@ -121,50 +121,6 @@ namespace Rt2::View
         _model.addOutput(ot);
     }
 
-    void DirViewCanvas::updateMouse(const QPointF& co)
-    {
-        _co   = co - _last;
-        _last = co;
-    }
-
-    void DirViewCanvas::mousePressEvent(QMouseEvent* event)
-    {
-        if (event->button() == Qt::LeftButton)
-        {
-            _state |= ENTER;
-            updateMouse(mapToScene(Qmc::point(event->globalPosition())));
-            update();
-            event->accept();
-        }
-        QGraphicsView::mousePressEvent(event);
-    }
-
-    void DirViewCanvas::mouseReleaseEvent(QMouseEvent* event)
-    {
-        if (event->button() == Qt::LeftButton)
-        {
-            _state &= ~ENTER;
-            _offs = _co = _last = {0, 0};
-            update();
-            event->accept();
-        }
-        QGraphicsView::mouseReleaseEvent(event);
-    }
-
-    void DirViewCanvas::mouseMoveEvent(QMouseEvent* event)
-    {
-        if (_state & ENTER)
-        {
-            updateMouse(mapToScene(Qmc::point(event->globalPosition())));
-
-            _offs += _co;
-            translate(_offs.x(), _offs.y());
-            update();
-            event->accept();
-        }
-        QGraphicsView::mouseMoveEvent(event);
-    }
-
     bool DirViewCanvas::event(QEvent* event)
     {
         if ((int)event->type() == Builder::DirPushEventCode)
