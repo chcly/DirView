@@ -21,14 +21,14 @@ cmake --build Build
 
 Optional defines.
 
-| Option                      | Description                                          | Default |
-|:----------------------------|:-----------------------------------------------------|:-------:|
-| DirView_BUILD_TEST         | Build the unit test program.                         |   ON    |
-| DirView_AUTO_RUN_TEST      | Automatically run the test program.                  |   OFF   |
+| Option                | Description                         | Default |
+| :-------------------- | :---------------------------------- | :-----: |
+| DirView_BUILD_TEST    | Build the unit test program.        |   ON    |
+| DirView_AUTO_RUN_TEST | Automatically run the test program. |   OFF   |
 
+### Dependencies
 
-
-# Dependencies
+Local and external dependencies.
 
 ```mermaid
 graph BT;
