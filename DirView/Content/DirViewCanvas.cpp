@@ -87,7 +87,10 @@ namespace Rt2::View
     void DirViewCanvas::push(const Directory& directory)
     {
         DirViewItem* item = new DirViewItem(directory);
+        item->setFlags(QGraphicsItem::ItemIsSelectable);
+
         _scene->addItem(item);
+        
         item->setPosition(_shelf);
 
         if (_cur + 1 < _nrPerW)
@@ -161,7 +164,7 @@ namespace Rt2::View
 
     bool DirViewCanvas::event(QEvent* event)
     {
-        if ((int)event->type() == Builder::DIR_PUSH_EVENT)
+        if ((int)event->type() == Builder::DirPushEvent)
         {
             if (const Builder::DirectoryEvent* de =
                     (Builder::DirectoryEvent*)event)

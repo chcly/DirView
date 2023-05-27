@@ -3,7 +3,7 @@
 namespace Rt2::View::Builder
 {
     DirectoryEvent::DirectoryEvent(const Directory& dir) :
-        QEvent((Type)DIR_PUSH_EVENT),
+        QEvent((Type)DirPushEvent),
         _directory(dir)
     {
     }

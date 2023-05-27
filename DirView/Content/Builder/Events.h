@@ -1,14 +1,11 @@
 #pragma once
 #include <QEvent>
 #include "DirView/Content/Builder/Types.h"
+#include "View/Definitions.h"
 
 namespace Rt2::View::Builder
 {
-    enum EventCodes
-    {
-        DIR_PUSH_EVENT = QEvent::Type::User + 5,
-        BUILD_EVENT,
-    };
+    constexpr int DirPushEvent = EC_002;
 
     class DirectoryEvent final : public QEvent
     {

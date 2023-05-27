@@ -35,8 +35,6 @@
 
 namespace Rt2::View
 {
-    constexpr qreal Socket = Metrics::defaultTextSize / 2;
-
     DirViewItem::DirViewItem(const Directory& dir, QGraphicsItem* parent) :
         QGraphicsItem(parent),
         _item(dir)
@@ -105,9 +103,6 @@ namespace Rt2::View
                             const QStyleOptionGraphicsItem* option,
                             QWidget*                        widget)
     {
-        // paint->setPen(QPen(Colors::Foreground));
-        // paint->drawRect(option->rect);
-
         const QRectF rect = boundingRect();
 
         paint->save();

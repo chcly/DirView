@@ -115,7 +115,7 @@ namespace Rt2::View
 
     bool DirListView::event(QEvent* event)
     {
-        if ((int)event->type() == DIR_EVENT)
+        if ((int)event->type() == DirListEvent)
         {
             if (const auto path = Directory::Path(((EntryEvent*)event)->directory());
                 path.exists())

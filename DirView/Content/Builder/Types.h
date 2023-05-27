@@ -53,7 +53,6 @@ namespace Rt2::View
         Math::Vec2 _max{0, 0};
 
         void copy(const FileArray& arr);
-        void copy(const IndexedDirectoryArray& arr);
 
     public:
         Directory() = default;

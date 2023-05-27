@@ -8,6 +8,7 @@ namespace Rt2::View::Builder
     class Builder final : public Thread::Runner
     {
     public:
+
         enum BuildState
         {
             DONE,

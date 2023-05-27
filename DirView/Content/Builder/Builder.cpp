@@ -1,8 +1,8 @@
 #include "DirView/Content/Builder/Builder.h"
+#include <QSizeF>
 #include "DirView/Content/Cache/ColorCache.h"
 #include "Math/Bin/Pack.h"
 #include "Utils/Hash.h"
-#include <QSizeF>
 
 namespace Rt2::View::Builder
 {
@@ -119,4 +119,5 @@ namespace Rt2::View::Builder
             dirs.pop_back();
         }
     }
+
 }  // namespace Rt2::View::Builder

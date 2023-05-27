@@ -22,14 +22,11 @@
 #pragma once
 #include <QEvent>
 #include "Utils/FileSystem.h"
+#include "View/Definitions.h"
 
 namespace Rt2::View
 {
-    enum EventCodes  // FIXME: needs to be globally unique in View
-    {
-        DIR_EVENT = QEvent::Type::User + 1,
-        BUILD_EVENT,
-    };
+    constexpr int DirListEvent = EC_001;
 
     class EntryEvent final : public QEvent
     {
