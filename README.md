@@ -4,13 +4,6 @@ Sample directory viewer.
 
 ![I0](Extras/SS01.png)
 
-## Layout structure
-
-Provides the same structure found in [ModuleTemplate](https://github.com/chcly/ModuleTemplate) with the addition of extra modules.
-
-+ [Internal/Utils](https://github.com/chcly/Module.Utils) - Provides the project level dependency for Utils.
-+ [Internal/View](https://github.com/chcly/Module.View) - Provides the View dependency.
-
 ## Testing
 
 The testing directory is setup to work with [googletest](https://github.com/google/googletest).
@@ -34,3 +27,21 @@ Optional defines.
 | DirView_AUTO_RUN_TEST      | Automatically run the test program.                  |   OFF   |
 
 
+
+# Dependencies
+
+```mermaid
+graph BT;
+      DirView-->Utils;
+      DirView-->Math;
+      DirView-->View;
+      DirView-->Thread;
+      Thread-->TBB;
+      View-->Qt;
+      
+      Math-->Utils;
+      View-->Utils;
+      
+      Thread-->Utils;
+      
+```
