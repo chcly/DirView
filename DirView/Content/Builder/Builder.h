@@ -1,10 +1,10 @@
 #pragma once
-#include "DirView/Content/Declarations.h"
+#include "DirView/Content/Builder/Types.h"
 #include "Thread/Runner.h"
+#include "Utils/FileSystem.h"
 
 namespace Rt2::View::Builder
 {
-
     class Builder final : public Thread::Runner
     {
     public:
@@ -41,4 +41,4 @@ namespace Rt2::View::Builder
         void update() override;
     };
 
-}  // namespace Rt2::DirectoryView
+}  // namespace Rt2::View::Builder

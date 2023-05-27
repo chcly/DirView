@@ -105,6 +105,8 @@ namespace Rt2::View
 
         _view = new StringListView();
         lo->addWidget(_view, 1);
+        lo->setSizeConstraint(QLayout::SetMaximumSize);
+        setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     }
 
     bool DirListView::event(QEvent* event)

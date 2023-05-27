@@ -1,5 +1,9 @@
 #pragma once
+#include <QColor>
+#include <QPen>
 #include <QTransform>
+
+#include "Types.h"
 #include "DirView/Content/Declarations.h"
 
 namespace Rt2::View

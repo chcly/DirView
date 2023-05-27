@@ -19,3 +19,15 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
+
+#include "DirView/Content/DirViewEvent.h"
+
+namespace Rt2::View
+{
+    EntryEvent::EntryEvent(String dir):
+        QEvent((Type)DIR_EVENT),
+        _directory{std::move(dir)}
+    {
+    }
+
+}  // namespace Rt2::View

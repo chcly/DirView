@@ -24,8 +24,11 @@
 #include <QSplitter>
 #include <QWidget>
 #include "DirListView.h"
+#include "DirViewCanvas.h"
 #include "DirViewEditPath.h"
 #include "DirViewInfo.h"
+#include "Cache/ColorCache.h"
+#include "Cache/PathCache.h"
 #include "View/Colors.h"
 #include "View/Metrics.h"
 #include "View/Qu.h"
@@ -36,10 +39,18 @@ namespace Rt2::View
     DirView::DirView(QWidget* parent) :
         LayoutView(parent)
     {
+        // these should be removed
+
+        new ColorCache();
+        new PathCache();
         construct();
     }
 
-    DirView::~DirView() = default;
+    DirView::~DirView()
+    {
+        delete ColorCache::pointer();
+        delete PathCache::pointer();
+    }
 
     void DirView::setPath(const String& path)
     {
@@ -58,23 +69,26 @@ namespace Rt2::View
         _path->setFixedHeight(Metrics::iconPadding.height() * 2);
 
         _info = new DirViewInfo();
-        _info->setMaximumHeight(Metrics::ctrlMin.height());
         _listView = new DirListView();
+        _canvas = new DirViewCanvas();
 
-        const auto c3 = Qu::box(nullptr, Colors::Border);
-
-        const auto hl = Qu::horizontal();
-        hl->addWidget(
+        const auto ml = Qu::horizontal();
+        const auto sb =
             Qu::split(
-                Qu::split(
-                    _info,
-                    _listView,
-                    Qt::Vertical),
-                c3,
-                Qt::Horizontal),
-            1);
+                _info,
+                _listView,
+                Qt::Vertical);
+        sb->setStretchFactor(0, 0);
+        sb->setStretchFactor(1, 1);
+
+        const auto sl = Qu::split(sb, _canvas, Qt::Horizontal);
+        sl->setStretchFactor(0, 0);
+        sl->setStretchFactor(1, 1);
+
+        ml->addWidget(sl, 1);
+
         layout->addWidget(_path);
-        layout->addLayout(hl, 1);
+        layout->addLayout(ml, 1);
 
         // view -> path
         _model.addOutput(
@@ -82,6 +96,12 @@ namespace Rt2::View
             {
                 if (_path)
                     _path->setPath(str);
+            });
+        // listItem -> path
+        _listView->addOutput(
+            [this](const String& str)
+            {
+                _path->setPath(str);
             });
 
         // path -> list
@@ -94,13 +114,9 @@ namespace Rt2::View
                     _listView->setPath(str);
                 if (_info)
                     _info->setPath(str);
+                if (_canvas)
+                    _canvas->setPath(str);
             });
 
-        // listItem -> path
-        _listView->addOutput(
-            [this](const String& str)
-            {
-                _path->setPath(str);
-            });
     }
 }  // namespace Rt2::View

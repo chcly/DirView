@@ -1,5 +1,6 @@
 #pragma once
-#include <QRect>
+#include "Math/Rect.h"
+#include "Math/Vec2.h"
 #include "Utils/Array.h"
 #include "Utils/FileSystem.h"
 #include "Utils/IndexCache.h"
@@ -9,17 +10,12 @@ class QPainter;
 
 namespace Rt2::View
 {
-    class GraphView;
-
     class IndexedDirectory;
     class Directory;
     class File;
 
-    // index lookup
-    using PathTable = IndexCache<String>;
-
-    using FileArray = SimpleArray<File>;
-
+    using PathTable             = IndexCache<String>;
+    using FileArray             = SimpleArray<File>;
     using DirectoryArray        = SimpleArray<Directory>;
     using IndexedDirectoryArray = SimpleArray<IndexedDirectory>;
 
@@ -29,9 +25,9 @@ namespace Rt2::View
         File()                = default;
         File(const File& rhs) = default;
 
-        size_t index{0};
-        size_t colorIndex{0};
-        QRectF rect{};
+        size_t     index{0};
+        size_t     colorIndex{0};
+        Math::Rect rect{};
     };
 
     class IndexedDirectory

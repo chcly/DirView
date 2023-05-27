@@ -13,3 +13,6 @@
 [submodule "Internal/Thread"]
 	path = Internal/Thread
 	url = https://github.com/chcly/Module.Thread.git
+[submodule "Internal/Math"]
+	path = Internal/Math
+	url = https://github.com/chcly/Module.Math.git

@@ -4,9 +4,11 @@ set(TargetName DirView)
 set_group(
     TargetName_SRC 
     Source:*.cpp
-    #Source/Builder:Builder/*.cpp
+    Source/Builder:Builder/*.cpp
+    Source/Cache:Cache/*.cpp
     Header:*.h
-    #Header/Builder:Builder/*.h
+    Header/Builder:Builder/*.h
+    Header/Cache:Cache/*.h
 )
 
 include_directories(

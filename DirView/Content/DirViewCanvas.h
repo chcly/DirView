@@ -23,11 +23,17 @@
 #include <QGraphicsView>
 #include <QLineEdit>
 #include <QWidget>
-#include "ViewModel/ViewModel.h"
+#include "Builder/Events.h"
 #include "DirView/Content/DirViewItem.h"
+#include "ViewModel/ViewModel.h"
 
 class QGraphicsView;
 class QGraphicsScene;
+
+namespace Rt2::View::Builder
+{
+    class Manager;
+}
 
 namespace Rt2::View
 {
@@ -35,9 +41,12 @@ namespace Rt2::View
     {
         Q_OBJECT
     private:
-        QGraphicsScene* _scene{nullptr};
-        QPointF         _co{0, 0}, _last{0, 0}, _offs{0, 0};
-        int             _state{0};
+        QGraphicsScene*   _scene{nullptr};
+        QPointF           _co{0, 0}, _last{0, 0}, _offs{0, 0}, _shelf{0,0};
+        int               _state{0};
+        Builder::Manager* _manager{nullptr};
+        Math::Vec2        _addPos{0, 0};
+        int               _nrPerW{0}, _cur{0};
 
     public:
         explicit DirViewCanvas(QWidget* parent = nullptr);
@@ -45,9 +54,10 @@ namespace Rt2::View
 
         void setPath(const String& path);
 
-
     private:
         void construct();
+
+        void push(const Directory& directory);
 
         void updateMouse(const QPointF& co);
 
@@ -56,6 +66,10 @@ namespace Rt2::View
         void mouseReleaseEvent(QMouseEvent* event) override;
 
         void mouseMoveEvent(QMouseEvent* event) override;
+
+        bool event(QEvent* event) override;
+
+        void resizeEvent(QResizeEvent* event) override;
     };
 
 }  // namespace Rt2::View

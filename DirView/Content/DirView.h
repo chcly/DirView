@@ -29,6 +29,7 @@
 
 namespace Rt2::View
 {
+    class DirViewCanvas;
     class DirViewInfo;
     class DirListView;
 
@@ -36,10 +37,11 @@ namespace Rt2::View
     {
         Q_OBJECT
     private:
-        EditPath*    _path{nullptr};
-        DirListView* _listView{nullptr};
-        DirViewInfo* _info{nullptr};
-        StringModel  _model;
+        EditPath*      _path{nullptr};
+        DirListView*   _listView{nullptr};
+        DirViewInfo*   _info{nullptr};
+        DirViewCanvas* _canvas{nullptr};
+        StringModel    _model;
 
     public:
         explicit DirView(QWidget* parent = nullptr);

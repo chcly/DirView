@@ -51,18 +51,19 @@ namespace Rt2::View
         setMinimumSize(Metrics::minPanel);
 
         _dirs = Qu::text("", Colors::Foreground);
-
         _files = Qu::text("", Colors::Foreground);
-
         _sizeInBytes = Qu::text("", Colors::Foreground);
 
         lo->addLayout(Qu::titleList("Info", {}));
         lo->addWidget(_dirs);
         lo->addWidget(_files);
         lo->addWidget(_sizeInBytes);
+        lo->addSpacing(Metrics::iconWidth);
         lo->addStretch();
 
-        setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        lo->setSizeConstraint(QLayout::SetMinimumSize);
+        setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     }
 
     void DirViewInfo::setPath(const String& path)

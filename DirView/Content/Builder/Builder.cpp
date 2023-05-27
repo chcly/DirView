@@ -1,9 +1,10 @@
-#include "DirectoryView/Directory/Builder.h"
-#include "DirectoryView/ColorCache.h"
+#include "DirView/Content/Builder/Builder.h"
+#include "DirView/Content/Cache/ColorCache.h"
 #include "Math/Bin/Pack.h"
 #include "Utils/Hash.h"
+#include <QSizeF>
 
-namespace Rt2::DirectoryView
+namespace Rt2::View::Builder
 {
     bool Builder::sync()
     {
@@ -118,4 +119,4 @@ namespace Rt2::DirectoryView
             dirs.pop_back();
         }
     }
-}  // namespace Rt2::DirectoryView
+}  // namespace Rt2::View::Builder

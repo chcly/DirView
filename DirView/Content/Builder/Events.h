@@ -1,12 +1,12 @@
 #pragma once
 #include <QEvent>
-#include "DirView/Content/Declarations.h"
+#include "DirView/Content/Builder/Types.h"
 
 namespace Rt2::View::Builder
 {
     enum EventCodes
     {
-        DIR_EVENT = QEvent::Type::User + 1,
+        DIR_PUSH_EVENT = QEvent::Type::User + 5,
         BUILD_EVENT,
     };
 
@@ -21,4 +21,4 @@ namespace Rt2::View::Builder
         const Directory& directory() const;
     };
 
-}  // namespace Rt2::DirectoryView
+}  // namespace Rt2::View::Builder

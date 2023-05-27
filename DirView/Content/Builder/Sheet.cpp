@@ -1,13 +1,14 @@
-#include "DirectoryView/Directory/Sheet.h"
+#include "Sheet.h"
 #include <QPainter>
-#include "DirectoryView/ColorCache.h"
-#include "DirectoryView/Definitions.h"
-#include "DirectoryView/MathConstructors.h"
-#include "DirectoryView/PathCache.h"
+#include "DirView/Content/Cache/ColorCache.h"
+#include "DirView/Content/Cache/PathCache.h"
 #include "Math/Bin/ShelfStep.h"
 #include "Math/Bin/SpiralStep.h"
+#include "View/Colors.h"
+#include "View/Qu.h"
+#include "DirView/Content/Cache/MathConstructors.h"
 
-namespace Rt2::DirectoryView
+namespace Rt2::View
 {
     constexpr QRectF Qrs = {.05, -0.05, 1, 1};
     constexpr QRectF Qr0 = {0, 0, 1, 1};

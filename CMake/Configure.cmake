@@ -45,6 +45,15 @@ DefineExternalTargetEx(
     ${DirView_AUTO_RUN_TEST}
 )
 
+DefineExternalTargetEx(
+    Math Extern
+    ${DirView_SOURCE_DIR}/Internal/Math 
+    ${DirView_SOURCE_DIR}/Internal/Math
+    ${DirView_BUILD_TEST}
+    ${DirView_AUTO_RUN_TEST}
+)
+
+
 configure_gtest(${DirView_SOURCE_DIR}/Test/googletest 
                 ${DirView_SOURCE_DIR}/Test/googletest/googletest/include)
 

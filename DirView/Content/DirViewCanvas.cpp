@@ -21,10 +21,14 @@
 */
 #include "DirViewCanvas.h"
 #include <QGraphicsView>
-#include <QLineEdit>
+#include <QMouseEvent>
 #include <QWidget>
-#include "DirView/Content/DirViewItem.h"
-#include "ViewModel/ViewModel.h"
+#include "Builder/Events.h"
+#include "Cache/MathConstructors.h"
+#include "DirView/Content/Builder/Manager.h"
+#include "View/Colors.h"
+#include "View/Metrics.h"
+#include "View/Qu.h"
 
 class QGraphicsView;
 class QGraphicsScene;
@@ -37,14 +41,118 @@ namespace Rt2::View
         construct();
     }
 
-    DirViewCanvas::~DirViewCanvas() = default;
+    DirViewCanvas::~DirViewCanvas()
+    {
+        delete _scene;
+        delete _manager;
+    }
 
     void DirViewCanvas::construct()
     {
+        setMouseTracking(true);
+        setUpdatesEnabled(true);
+        setRenderHint(QPainter::Antialiasing);
+        setMinimumWidth(Metrics::minWindow.width());
+        setBackgroundBrush(Colors::Border);
+        setTransformationAnchor(NoAnchor);
+
+        delete _scene;
+        _scene = new QGraphicsScene(0, 0, width(), height());
+        setScene(_scene);
+        _manager = new Builder::Manager(this);
+    }
+
+    void DirViewCanvas::push(const Directory& directory)
+    {
+        DirViewItem* item = new DirViewItem(directory);
+        _scene->addItem(item);
+
+        item->setPosition(_shelf);
+
+        if (_cur + 1 < _nrPerW)
+        {
+            ++_cur;
+            _shelf += QPointF(item->right() + 10, 0);
+        }
+        else
+        {
+            _cur = 0;
+            _shelf.setX(0);
+            _shelf.setY(_shelf.y() + (item->bottom() + 10));
+        }
+        setSceneRect(
+            QRectF{
+                0,
+                0,
+                Max(item->right(), _shelf.x()),
+                Max(item->bottom(), _shelf.y())});
+        update();
     }
 
     void DirViewCanvas::setPath(const String& path)
     {
+        _cur = 0;
+        _shelf = {0, 0};
+        _scene->clear();
+        _manager->build({path, 0, 0});
+    }
+
+    void DirViewCanvas::updateMouse(const QPointF& co)
+    {
+        _co   = co - _last;
+        _last = co;
+    }
+
+    void DirViewCanvas::mousePressEvent(QMouseEvent* event)
+    {
+        if (event->button() == Qt::LeftButton)
+        {
+            _state |= ENTER;
+            updateMouse(mapToScene(Qmc::point(event->globalPosition())));
+            update();
+        }
+    }
+
+    void DirViewCanvas::mouseReleaseEvent(QMouseEvent* event)
+    {
+        if (event->button() == Qt::LeftButton)
+        {
+            _state &= ~ENTER;
+            _offs = _co = _last = {0, 0};
+            update();
+        }
+    }
+
+    void DirViewCanvas::mouseMoveEvent(QMouseEvent* event)
+    {
+        if (_state & ENTER)
+        {
+            updateMouse(mapToScene(Qmc::point(event->globalPosition())));
+
+            _offs += _co;
+            translate(_offs.x(), _offs.y());
+
+            update();
+        }
+    }
+
+    bool DirViewCanvas::event(QEvent* event)
+    {
+        if ((int)event->type() == Builder::DIR_PUSH_EVENT)
+        {
+            if (const Builder::DirectoryEvent* de =
+                    (Builder::DirectoryEvent*)event)
+            {
+                push(de->directory());
+            }
+        }
+
+        return QGraphicsView::event(event);
+    }
+
+    void DirViewCanvas::resizeEvent(QResizeEvent* event)
+    {
+        _nrPerW = event->size().width() / DirViewItem::size;
     }
 
 }  // namespace Rt2::View

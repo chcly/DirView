@@ -21,12 +21,11 @@
 */
 #pragma once
 #include <QEvent>
-#include "DirView/Content/Declarations.h"
 #include "Utils/FileSystem.h"
 
 namespace Rt2::View
 {
-    enum EventCodes // FIXME: needs to be globally unique in View
+    enum EventCodes  // FIXME: needs to be globally unique in View
     {
         DIR_EVENT = QEvent::Type::User + 1,
         BUILD_EVENT,
@@ -38,16 +37,14 @@ namespace Rt2::View
         const String _directory;
 
     public:
-        explicit EntryEvent(String dir) :
-            QEvent((Type)DIR_EVENT),
-            _directory{std::move(dir)}
-        {
-        }
+        explicit EntryEvent(String dir);
 
-        const String& directory() const
-        {
-            return _directory;
-        }
+        const String& directory() const;
     };
+
+    inline const String& EntryEvent::directory() const
+    {
+        return _directory;
+    }
 
 }  // namespace Rt2::View

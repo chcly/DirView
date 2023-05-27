@@ -37,6 +37,7 @@ else()
     add_subdirectory(Internal/Thread)
     set(View_BUILD_SAMPLES ON)
     add_subdirectory(Internal/View)
+    add_subdirectory(Internal/Math)
 
     set(TargetFolders TRUE)
     set(TargetName DirView)
@@ -46,12 +47,14 @@ else()
         ${Utils_INCLUDE} 
         ${View_INCLUDE} 
         ${Thread_INCLUDE}
+        ${Math_INCLUDE}
     )
     
    set(DirView_DEP_LIBRARY  
         ${Utils_LIBRARY} 
         ${View_LIBRARY} 
         ${Thread_LIBRARY}
+        ${Math_LIBRARY}
         Qt6::Widgets 
         Qt6::Core 
         Qt6::Gui 

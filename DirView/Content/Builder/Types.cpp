@@ -1,7 +1,9 @@
-#include "DirectoryView/Directory/Types.h"
 #include "Thread/ParallelFor.h"
+//
+#include "DirView/Content/Builder/Types.h"
+#include "Math/Rect.h"
 
-namespace Rt2::DirectoryView
+namespace Rt2::View
 {
     void Directory::copy(const FileArray& arr)
     {
@@ -16,7 +18,7 @@ namespace Rt2::DirectoryView
                 _objects.size());
         }
     }
-    
+
     Directory::Directory(const Directory& rhs) :
         IndexedDirectory(rhs),
         _size(rhs._size),
@@ -50,7 +52,7 @@ namespace Rt2::DirectoryView
         }
         return Npos32;
     }
-    
+
     void Directory::update(const uint32_t idx, const Math::Rect& r)
     {
         if (idx < _objects.size())
@@ -71,4 +73,4 @@ namespace Rt2::DirectoryView
         _objects.reserve(U32(Min<size_t>(size, 0x800)));
     }
 
-}  // namespace Rt2::DirectoryView
+}  // namespace Rt2::View
