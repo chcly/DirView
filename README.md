@@ -2,7 +2,9 @@
 
 Sample directory viewer.
 
-![I0](Extras/SS01.png)
+Provides a different type of graphical view of the file system. 
+
++ [ScreenShot](Extras/SS01.png) - Shows a screen capture. 
 
 ## Testing
 
@@ -33,15 +35,20 @@ Local and external dependencies.
 ```mermaid
 graph BT;
       DirView-->Utils;
-      DirView-->Math;
       DirView-->View;
+      DirView-->Math;
       DirView-->Thread;
+
       Thread-->TBB;
-      View-->Qt;
-      
-      Math-->Utils;
-      View-->Utils;
-      
       Thread-->Utils;
+
+      Math-->Utils;
+
+      View-->Qt;
+      View-->Utils;
+
+      Qt-->Core;
+      Qt-->Gui;
+      Qt-->Widgets;
       
 ```
