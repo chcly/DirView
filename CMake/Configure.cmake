@@ -37,6 +37,9 @@ DefineExternalTargetEx(
     ${DirView_AUTO_RUN_TEST}
 )
 
+set(View_BUILD_SAMPLES ${DirView_BUILD_SAMPLE} CACHE BOOL "" FORCE) 
+include(${DirView_SOURCE_DIR}/Internal/View/CMake/Globals.cmake)
+
 DefineExternalTargetEx(
     Thread Extern
     ${DirView_SOURCE_DIR}/Internal/Thread 

@@ -71,7 +71,7 @@ namespace Rt2::View
         FileSystem::count(path, _counts[0], _counts[1], _counts[2]);
 
         _dirs->clear();
-        _dirs->setText(Qsu::to(Su::join(" Directories, ", _counts[0])));
+        _dirs->setText(Qsu::to(Su::join(" Directories, ", _counts[0]+1)));
 
         _files->clear();
         _files->setText(Qsu::to(Su::join(" Files, ", _counts[1])));

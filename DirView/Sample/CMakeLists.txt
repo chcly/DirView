@@ -16,6 +16,7 @@ include_directories(
 add_executable(
     ${TargetName} 
     ${TargetName_SRC}
+    ${View_ICON_SRC}
 )
 
 target_link_libraries(

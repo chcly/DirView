@@ -35,8 +35,6 @@ else()
     add_subdirectory(Internal/Utils)
     include(${Utils_SOURCE_DIR}/CMake/Locals.cmake)
     add_subdirectory(Internal/Thread)
-    set(View_BUILD_SAMPLES OFF)
-    set(View_BUILD_TEST OFF)
     add_subdirectory(Internal/View)
     add_subdirectory(Internal/Math)
 
