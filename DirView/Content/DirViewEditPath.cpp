@@ -30,6 +30,7 @@
 #include "View/LayoutView.h"
 #include "View/Qu.h"
 #include "View/TextEditView.h"
+#include "View/IconButtonView.h"
 
 namespace Rt2::View
 {
