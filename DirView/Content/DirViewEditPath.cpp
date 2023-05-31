@@ -27,10 +27,10 @@
 #include "Utils/FileSystem.h"
 #include "Utils/String.h"
 #include "View/Definitions.h"
+#include "View/IconButtonView.h"
 #include "View/LayoutView.h"
 #include "View/Qu.h"
 #include "View/TextEditView.h"
-#include "View/IconButtonView.h"
 
 namespace Rt2::View
 {
@@ -72,14 +72,12 @@ namespace Rt2::View
             });
 
         // click -> back
-        connect(up,
-                &IconButtonView::clicked,
-                this,
-                [this]
-                {
-                    const Directory::Path val = Directory::Path(_model.value()).parentDir();
-                    _model.setValue(val.full(), ViewModel::BOTH);
-                });
+        up->addOutput(
+            [this](bool)
+            {
+                const String val = Directory::Path(_model.value()).parentDir2();
+                _model.setValue(val, ViewModel::BOTH);
+            });
     }
 
     void EditPath::setPath(const String& path)
