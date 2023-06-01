@@ -120,7 +120,7 @@ namespace Rt2::View
             if (const auto path = Directory::Path(((DirListEvent*)event)->directory());
                 path.exists())
             {
-                _view->addEntry(path.base(), path.full());
+                _view->addEntry(path.base(), Qsu::variant(path.full()));
             }
             return true;
         }
@@ -151,7 +151,7 @@ namespace Rt2::View
         }
     }
 
-    void DirListView::addOutput(const StringModel::Observer& ot) const
+    void DirListView::addOutput(const VariantModel::Observer& ot) const
     {
         if (_view)
             _view->addOutput(ot);

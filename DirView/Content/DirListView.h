@@ -45,7 +45,7 @@ namespace Rt2::View
 
         void setPath(const String& path);
 
-        void addOutput(const StringModel::Observer& ot) const;
+        void addOutput(const VariantModel::Observer& ot) const;
 
     private:
         void construct();

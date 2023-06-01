@@ -84,13 +84,24 @@ namespace Rt2::View
             });
     }
 
-    void DirViewCanvas::push(const Directory& directory)
+    void DirViewCanvas::layout()
     {
-        DirViewItem* item = new DirViewItem(directory, this);
-        item->setFlags(QGraphicsItem::ItemIsSelectable);
+        _shelf = {Sx, Sx};
+        _cur = 0;
+
+        const auto& items = _scene->items();
+        for (const auto item : items)
+            updateItem((DirViewItem*)item);
+
+        update();
+    }
+
+    void DirViewCanvas::updateItem(DirViewItem* item)
+    {
+        if (!item) return;
+
         item->setPosition(_shelf);
 
-        _scene->addItem(item);
         if (_cur + 1 < _nrPerW)
         {
             ++_cur;
@@ -102,8 +113,15 @@ namespace Rt2::View
             _shelf.setX(Sx);
             _shelf.setY(_shelf.y() + item->height() + Spacing);
         }
-
         updateBounds();
+    }
+
+    void DirViewCanvas::push(const Directory& directory)
+    {
+        DirViewItem* item = new DirViewItem(directory, this);
+        item->setFlags(QGraphicsItem::ItemIsSelectable);
+        _scene->addItem(item);
+        updateItem(item);
         update();
     }
 
@@ -148,9 +166,12 @@ namespace Rt2::View
 
     void DirViewCanvas::resizeEvent(QResizeEvent* event)
     {
-        _nrPerW = int((qreal)event->size().width() / (ItemSize + Spacing));
-        updateBounds();
         QGraphicsView::resizeEvent(event);
+
+        const int old = _nrPerW;
+        _nrPerW       = int((qreal)event->size().width() / (ItemSize + Spacing));
+        if (old != _nrPerW)
+            layout();
     }
 
 }  // namespace Rt2::View

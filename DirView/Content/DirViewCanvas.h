@@ -37,6 +37,8 @@ namespace Rt2::View::Builder
 
 namespace Rt2::View
 {
+    class DirViewItem;
+
     class DirViewCanvas final : public QGraphicsView
     {
         Q_OBJECT
@@ -60,6 +62,10 @@ namespace Rt2::View
         void construct();
 
         void updateBounds();
+
+        void layout();
+
+        void updateItem(DirViewItem *item);
 
         void push(const Directory& directory);
 

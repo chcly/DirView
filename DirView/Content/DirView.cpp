@@ -97,9 +97,9 @@ namespace Rt2::View
             });
         // listItem -> path
         _listView->addOutput(
-            [this](const String& str)
+            [this](const QVariant& str)
             {
-                _path->setPath(str);
+                _path->setPath(str.toString().toStdString());
             });
 
         // path -> list
