@@ -154,7 +154,7 @@ namespace Rt2::View
     void DirListView::addOutput(const VariantModel::Observer& ot) const
     {
         if (_view)
-            _view->addOutput(ot);
+            _view->addDoubleClickOutput(ot);
     }
 
 }  // namespace Rt2::View
