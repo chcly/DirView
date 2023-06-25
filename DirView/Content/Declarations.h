@@ -23,7 +23,6 @@
 #include "Math/Rect.h"
 #include "Math/Vec2.h"
 #include "Utils/IndexCache.h"
-#include "Utils/IndexCache.h"
 
 namespace Rt2::View
 {

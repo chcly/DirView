@@ -30,3 +30,4 @@ set_target_properties(
     ${TargetName} 
     PROPERTIES FOLDER "${TargetGroup}"
 )
+qt_auto_resource(${TargetName})

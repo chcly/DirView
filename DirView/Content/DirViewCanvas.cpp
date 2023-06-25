@@ -26,16 +26,15 @@
 #include "DirView/Content/Builder/Events.h"
 #include "DirView/Content/Builder/Manager.h"
 #include "DirView/Content/DirViewEvent.h"
-#include "View/Colors.h"
-#include "View/Metrics.h"
 #include "View/Qu.h"
+#include "View/Style.h"
 
 class QGraphicsView;
 class QGraphicsScene;
 
 namespace Rt2::View
 {
-    constexpr qreal Spacing  = Metrics::defaultTextSize + 6;
+    constexpr qreal Spacing  = Style::FontSize::Normal + Style::Spacing::Large;
     constexpr qreal Sx       = Spacing / 2;
     constexpr qreal ItemSize = DirViewItem::size;
 
@@ -56,8 +55,8 @@ namespace Rt2::View
         setMouseTracking(true);
         setUpdatesEnabled(true);
         setRenderHint(QPainter::Antialiasing);
-        setMinimumWidth(Metrics::minWindow.width());
-        setBackgroundBrush(Colors::Border);
+        setMinimumWidth(Style::Window::Small.width());
+        setBackgroundBrush(Style::Window::Background);
         setTransformationAnchor(AnchorViewCenter);
         setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -87,7 +86,7 @@ namespace Rt2::View
     void DirViewCanvas::layout()
     {
         _shelf = {Sx, Sx};
-        _cur = 0;
+        _cur   = 0;
 
         const auto& items = _scene->items();
         for (const auto item : items)
@@ -169,7 +168,8 @@ namespace Rt2::View
         QGraphicsView::resizeEvent(event);
 
         const int old = _nrPerW;
-        _nrPerW       = int((qreal)event->size().width() / (ItemSize + Spacing));
+
+        _nrPerW = int((qreal)event->size().width() / (ItemSize + Spacing));
         if (old != _nrPerW)
             layout();
     }

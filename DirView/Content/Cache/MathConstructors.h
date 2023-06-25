@@ -20,14 +20,16 @@
 -------------------------------------------------------------------------------
 */
 #pragma once
+#include <QRect>
+
 #include "Math/Rect.h"
-#include "View/Colors.h"
+#include "View/ColorMix.h"
 
 namespace Rt2::View
 {
-    using TintB = ConstMix<0x00, 0x00, 0x1F>;
-    using TintG = ConstMix<0x00, 0x2F, 0x00>;
-    using TintR = ConstMix<0x2F, 0x00, 0x00>;
+    using TintB = Mix::Mixer::MixRgb<0x00, 0x00, 0x1F>;
+    using TintG = Mix::Mixer::MixRgb<0x00, 0x2F, 0x00>;
+    using TintR = Mix::Mixer::MixRgb<0x2F, 0x00, 0x00>;
 
     class Qm
     {

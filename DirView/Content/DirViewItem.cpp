@@ -28,8 +28,6 @@
 #include "DirView/Content/Cache/PathCache.h"
 #include "DirView/Content/DirViewEvent.h"
 #include "Utils/Directory/Path.h"
-#include "View/Colors.h"
-#include "View/Metrics.h"
 #include "View/Qu.h"
 
 namespace Rt2::View
@@ -62,7 +60,7 @@ namespace Rt2::View
 
         _path = Su::trimR(PathCache::reference().find(_item.index()), '/');
         _name = Rt2::Directory::Path(_path).base();
-        _text = Qu::measure(_name, Metrics::defaultTextSize);
+        _text = Qu::measure(_name, Style::FontSize::Normal);
     }
 
     QRectF DirViewItem::boundingRect() const
@@ -101,9 +99,9 @@ namespace Rt2::View
         paint->translate(rect.x(), rect.y());
         paint->scale(rect.width(), rect.height());
 
-        paint->fillRect(Qr0, Colors::Border);
-        paint->fillRect(Qr1, Colors::Background);
-        paint->fillRect(Qr2, Colors::Border.lighter(Colors::Lgt030));
+        paint->fillRect(Qr0, Style::Window::Border);
+        paint->fillRect(Qr1, Style::Window::Background);
+        paint->fillRect(Qr2, Style::Window::BackgroundLight);
 
         QTransform t;
         t.translate(0, 1);
@@ -131,7 +129,7 @@ namespace Rt2::View
 
         paint->restore();
 
-        paint->setPen(QPen(Colors::Emphasis[2]));
+        paint->setPen(QPen(Style::Window::Foreground));
         paint->drawText(QPointF{
                             rect.left(),
                             4 + rect.bottom() + _text.height() / 2,

@@ -28,8 +28,8 @@
 #include "Utils/FileSystem.h"
 #include "Utils/String.h"
 #include "View/LayoutView.h"
-#include "View/Metrics.h"
 #include "View/Qu.h"
+#include "View/TitleListWidget.h"
 
 namespace Rt2::View
 {
@@ -99,16 +99,19 @@ namespace Rt2::View
 
     void DirListView::construct()
     {
-        const auto lo = Qu::vertical();
+        const auto lo = Style::Layout::v0(Style::Spacing::Small);
         constructView(lo);
-        setBorder(0);
-        setPadding(0);
-        setMinimumSize(Metrics::minPanel);
+        setBackgroundColor(Style::Window::Swatches::Qb05::Qs0);
 
-        lo->addLayout(Qu::titleList("Listing", {}));
+        const auto title = Style::Views::title("Listing");
+        title->setBackgroundColor(Style::Window::Swatches::Qb05::Qs1);
 
         _view = new StringListView();
+        _view->setPadding(Style::Margin::Small);
+        lo->addSpacing(Style::Spacing::Small);
+        lo->addWidget(title);
         lo->addWidget(_view, 1);
+
         lo->setSizeConstraint(QLayout::SetMaximumSize);
         setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     }

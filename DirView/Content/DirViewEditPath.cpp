@@ -44,12 +44,11 @@ namespace Rt2::View
 
     void EditPath::construct()
     {
-        const auto lo = Qu::horizontal();
+        const auto lo = Style::Layout::h3();
         constructView(lo);
-        setPadding(Metrics::borderSizeThin);
-        lo->setSpacing(Metrics::borderSizeThin);
+        setBackgroundColor(Style::Window::Swatches::Qb15::Qs0);
 
-        const auto up = Qu::icon(IconBack);
+        const auto up = Style::Views::flatIcon(IconBack);
         lo->addWidget(up);
 
         _edit = new TextEditView();

@@ -59,12 +59,12 @@ namespace Rt2::View
         if (const size_t loc = _colorTable.find(type);
             loc == Npos)
         {
-            const QColor col = TintB::mix(
+            const QColor col = TintB::qMix(
                 0x33,
                 Math::Rand::u8(),
                 Math::Rand::u8(),
                 Math::Rand::u8(),
-                0.25);
+                0.35);
             _colorTable.insert(type, col);
             return col;
         }

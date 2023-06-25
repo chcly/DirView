@@ -31,7 +31,7 @@ namespace Rt2::View
     class DirViewItem final : public QGraphicsItem
     {
     public:
-        static constexpr qreal size = 200;
+        static constexpr qreal size = 150;
 
     private:
         Directory      _item{};

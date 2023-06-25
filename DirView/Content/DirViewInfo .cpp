@@ -25,9 +25,8 @@
 #include "Utils/Char.h"
 #include "Utils/FileSystem.h"
 #include "Utils/String.h"
-#include "View/Colors.h"
-#include "View/Metrics.h"
 #include "View/Qu.h"
+#include "View/TitleListWidget.h"
 
 namespace Rt2::View
 {
@@ -41,24 +40,24 @@ namespace Rt2::View
 
     void DirViewInfo::construct()
     {
-        const auto lo = Qu::vertical();
+        const auto lo = Style::Layout::v0(Style::Spacing::Small);
         constructView(lo);
-        setBorder(0);
-        setPadding(0);
-        setMinimumSize(Metrics::minPanel);
+        setBackgroundColor(Style::Window::Swatches::Qb15::Qs0);
+        
+        _dirs        = Style::Widget::label();
+        _files       = Style::Widget::label();
+        _sizeInBytes = Style::Widget::label();
 
-        _dirs        = Qu::text("", Colors::Emphasis[3]);
-        _files       = Qu::text("", Colors::Emphasis[3]);
-        _sizeInBytes = Qu::text("", Colors::Emphasis[3]);
+        const auto title = Style::Views::title("Info");
+        title->setBackgroundColor(Style::Window::Swatches::Qb15::Qs1);
 
-        lo->addLayout(Qu::titleList("Info", {}));
+        lo->addWidget(title);
         lo->addWidget(_dirs);
         lo->addWidget(_files);
         lo->addWidget(_sizeInBytes);
-        lo->addSpacing(Metrics::iconWidth);
+        lo->addSpacing(Style::Icon::Normal);
         lo->addStretch();
 
-        lo->setSizeConstraint(QLayout::SetMinimumSize);
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     }
 

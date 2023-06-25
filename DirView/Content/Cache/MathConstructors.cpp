@@ -81,7 +81,7 @@ namespace Rt2::View
 
     QColor Qm::randB()
     {
-        return TintB::mix(0x33,
+        return TintB::qMix(0x33,
                           Math::Rand::u8(),
                           Math::Rand::u8(),
                           Math::Rand::u8(),
@@ -90,7 +90,7 @@ namespace Rt2::View
 
     QColor Qm::randG()
     {
-        return TintG::mix(0x33,
+        return TintG::qMix(0x33,
                           Math::Rand::u8(),
                           Math::Rand::u8(),
                           Math::Rand::u8(),
@@ -99,7 +99,7 @@ namespace Rt2::View
 
     QColor Qm::randR()
     {
-        return TintR::mix(0x33,
+        return TintR::qMix(0x33,
                           Math::Rand::u8(),
                           Math::Rand::u8(),
                           Math::Rand::u8(),

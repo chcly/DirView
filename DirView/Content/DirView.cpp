@@ -29,8 +29,7 @@
 #include "DirViewCanvas.h"
 #include "DirViewEditPath.h"
 #include "DirViewInfo.h"
-#include "View/Metrics.h"
-#include "View/Qu.h"
+#include "View/Style.h"
 
 namespace Rt2::View
 {
@@ -57,29 +56,24 @@ namespace Rt2::View
 
     void DirView::construct()
     {
-        const auto layout = Qu::vertical();
+        const auto layout = Style::Layout::v0();
         constructView(layout);
-        setMinimumSize(Metrics::minWindow);
-        setBorder(0);
-        setPadding(0);
+        setMinimumSize(Style::Window::Small);
+        setBackgroundColor(Style::Window::Swatches::Qb10::Qs1);
 
         _path = new EditPath();
-        _path->setFixedHeight(Metrics::iconPadding.height() * 2);
+        _path->setFixedHeight(Style::Window::BaseHeight);
 
         _info     = new DirViewInfo();
         _listView = new DirListView();
         _canvas   = new DirViewCanvas();
 
-        const auto ml = Qu::horizontal();
-        const auto sb =
-            Qu::split(
-                _info,
-                _listView,
-                Qt::Vertical);
+        const auto ml = Style::Layout::h0();
+        const auto sb = Style::Widget::vs(_info, _listView);
         sb->setStretchFactor(0, 0);
         sb->setStretchFactor(1, 1);
 
-        const auto sl = Qu::split(sb, _canvas, Qt::Horizontal);
+        const auto sl = Style::Widget::hs(sb, _canvas);
         sl->setStretchFactor(0, 0);
         sl->setStretchFactor(1, 1);
 

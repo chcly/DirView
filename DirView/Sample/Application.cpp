@@ -3,7 +3,6 @@
 #include "DirView/Content/DirView.h"
 #include "Utils/Exception.h"
 #include "Utils/CommandLine/Parser.h"
-#include "View/Metrics.h"
 #include "View/Qu.h"
 
 namespace Rt2::Samples
@@ -29,7 +28,7 @@ namespace Rt2::Samples
         View::Qu::initResources(app);
 
         View::DirView win{};
-        win.setMinimumSize(View::Metrics::minWindow);
+        win.setMinimumSize(View::Style::Window::Small);
         win.setPath(_path);
         win.showMaximized();
 
